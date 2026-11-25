@@ -2,7 +2,18 @@
 
 A historical market-level forecasting case study and a separate property investment scenario calculator. This project is designed around business analytics, not a claim of property-specific appraisal or realized investment profits.
 
-## Results
+## Current-data version: Zillow metro home values
+
+The [latest_zhvi.py](latest_zhvi.py) pipeline uses the latest available Zillow Home Value Index (ZHVI) data, with 12 calendar months for validation and the latest 12 for holdout. It compares ridge and gradient boosting with persistence. Download the metro-level, all-homes, smoothed seasonally adjusted ZHVI CSV from [Zillow Research](https://www.zillow.com/research/data/).
+
+```bash
+pip install -r requirements.txt
+python latest_zhvi.py path/to/Metro_zhvi.csv
+```
+
+The pipeline records the actual final observation month and exports metrics and predictions to reports_zhvi/. Current-data results are pending execution. ZHVI measures typical home values, not median transaction prices; the prior Texas benchmark below remains a distinct historical experiment.
+
+## Historical benchmark results
 
 | Candidate | 2013 validation MAE |
 |---|---:|
@@ -53,7 +64,3 @@ Illustrative inputs yield $42,000 estimated profit, 17.5% return on modeled cost
 ## Limitations
 
 City medians reflect transaction mix and are not individual property valuations. Historical data end in 2015 and may have reporting delays or revisions; the experiment assumes current-month inputs are available at prediction time. Complete-case filtering may bias coverage. A single historical holdout does not guarantee future performance. The scenario calculator requires an independently supported property resale estimate.
-
-## Portfolio disclosure
-
-This project was prepared with AI development assistance. Review and reproduce the results, understand the methodology, and make personal contributions before representing the project as independent work.

@@ -1,0 +1,16 @@
+{
+  "source": "https://files.zillowstatic.com/research/public_csvs/zhvi/Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv",
+  "latest_target_month": "2026-10",
+  "test_start": "2025-11",
+  "validation_start": "2024-11",
+  "selected": "ridge",
+  "validation_mae": {
+    "persistence": 951.548878452223,
+    "ridge": 385.9892487770979,
+    "gradient_boosting": 405.98317307274493
+  },
+  "test_mae": 337.03021073296475,
+  "baseline_mae": 891.087883764065,
+  "test_rows": 10728,
+  "metros": 894
+}

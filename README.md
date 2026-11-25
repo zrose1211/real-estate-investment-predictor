@@ -15,7 +15,17 @@ python latest_zhvi.py  # download current Zillow CSV
 python latest_zhvi.py path/to/Metro_zhvi.csv
 ```
 
-The pipeline records the actual final observation month and exports metrics, predictions and an error comparison chart to `reports_zhvi/`. Current-data results are pending execution. ZHVI measures typical home values, not median transaction prices; the prior Texas benchmark below remains a distinct historical experiment.
+The pipeline records the actual final observation month and exports metrics, predictions and an error comparison chart to `reports_zhvi/`. The November 25, 2026 evaluation completed successfully. ZHVI measures typical home values, not median transaction prices; the prior Texas benchmark below remains a distinct historical experiment.
+
+## Current Zillow results (through October 2026)
+
+| Metric | Ridge regression | Persistence |
+| --- | ---: | ---: |
+| Holdout MAE | **$337.03** | $891.09 |
+
+**62.2% lower MAE** across 10,728 metro-month observations in 894 metros, November 2025–October 2026. Ridge was selected on the preceding validation period. The target is next-month ZHVI, a smoothed home-value index, not an individual transaction price. The current-vintage series may be revised; the result is not a real-time vintage backtest.
+
+[Metrics JSON](reports_current/metrics.json) · [Evaluation run and downloadable predictions/chart](https://github.com/zrose1211/real-estate-investment-predictor/actions/runs/45696921691)
 
 ## Historical benchmark results
 

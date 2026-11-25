@@ -1,5 +1,7 @@
 # Real Estate Market Forecasting & Investment Scenarios
 
+[Python](https://www.python.org/) · [Automated checks](https://github.com/zrose1211/real-estate-investment-predictor/actions) · [Source files](https://github.com/zrose1211/real-estate-investment-predictor/tree/main)
+
 A historical market-level forecasting case study and a separate property investment scenario calculator. This project is designed around business analytics, not a claim of property-specific appraisal or realized investment profits.
 
 ## Current-data version: Zillow metro home values
@@ -8,10 +10,12 @@ The [latest_zhvi.py](latest_zhvi.py) pipeline uses the latest available Zillow H
 
 ```bash
 pip install -r requirements.txt
+python latest_zhvi.py  # download current Zillow CSV
+# or use a local snapshot:
 python latest_zhvi.py path/to/Metro_zhvi.csv
 ```
 
-The pipeline records the actual final observation month and exports metrics and predictions to reports_zhvi/. Current-data results are pending execution. ZHVI measures typical home values, not median transaction prices; the prior Texas benchmark below remains a distinct historical experiment.
+The pipeline records the actual final observation month and exports metrics, predictions and an error comparison chart to `reports_zhvi/`. Current-data results are pending execution. ZHVI measures typical home values, not median transaction prices; the prior Texas benchmark below remains a distinct historical experiment.
 
 ## Historical benchmark results
 
@@ -64,3 +68,7 @@ Illustrative inputs yield $42,000 estimated profit, 17.5% return on modeled cost
 ## Limitations
 
 City medians reflect transaction mix and are not individual property valuations. Historical data end in 2015 and may have reporting delays or revisions; the experiment assumes current-month inputs are available at prediction time. Complete-case filtering may bias coverage. A single historical holdout does not guarantee future performance. The scenario calculator requires an independently supported property resale estimate.
+
+## Automated evaluation
+
+The [Portfolio checks workflow](https://github.com/zrose1211/real-estate-investment-predictor/actions/workflows/checks.yml) runs the test suite on GitHub Actions. Select **Run workflow** to regenerate the evaluation outputs; download the `evaluation-results` artifact from a successful run. The refresh uses external data sources; availability and results depend on the downloaded snapshot. The workflow does not overwrite previously published historical metrics.

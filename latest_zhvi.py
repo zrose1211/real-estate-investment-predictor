@@ -10,6 +10,8 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_absolute_error
 
+URL = 'https://files.zillowstatic.com/research/public_csvs/zhvi/Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv'
+
 def prepare(raw):
     dates=[c for c in raw.columns if pd.notna(pd.to_datetime(c,format='%Y-%m-%d',errors='coerce'))]
     if not dates or 'RegionID' not in raw: raise ValueError('Expected Zillow wide-format metro ZHVI CSV')
@@ -30,6 +32,7 @@ def prepare(raw):
 
 def run(source,out):
     d=prepare(pd.read_csv(source))
+    if d.empty: raise ValueError('No valid metro-month observations')
     end=d.target_date.max()
     test_start=end-11
     val_start=test_start-12
@@ -48,7 +51,13 @@ def run(source,out):
     out=Path(out);out.mkdir(parents=True,exist_ok=True)
     (out/'metrics.json').write_text(json.dumps(metrics,indent=2))
     p=test[['RegionID','target_date','target','value']].copy();p['prediction']=pred;p.to_csv(out/'predictions.csv',index=False)
+    import matplotlib.pyplot as plt
+    monthly=p.assign(model_error=(p.target-p.prediction).abs(),baseline_error=(p.target-p.value).abs()).groupby('target_date')[['model_error','baseline_error']].mean()
+    monthly.index=monthly.index.to_timestamp()
+    ax=monthly.plot(figsize=(9,4),title='Monthly holdout mean absolute error')
+    ax.set_ylabel('Error (USD)');ax.set_xlabel('Target month')
+    ax.figure.tight_layout();ax.figure.savefig(out/'forecast_error.png',dpi=150);plt.close(ax.figure)
     print(json.dumps(metrics,indent=2))
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('csv',help='Zillow metro ZHVI CSV path or URL');p.add_argument('--out',default='reports_zhvi');a=p.parse_args();run(a.csv,a.out)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('csv',nargs='?',default=URL,help='Zillow metro ZHVI CSV path or URL');p.add_argument('--out',default='reports_zhvi');a=p.parse_args();run(a.csv,a.out)

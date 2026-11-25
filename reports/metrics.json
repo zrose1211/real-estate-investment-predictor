@@ -1,0 +1,19 @@
+{
+  "rows": {
+    "train": 5583,
+    "validation": 548,
+    "test": 865
+  },
+  "cities": 46,
+  "validation_mae": {
+    "persistence": 10242.700729927008,
+    "ridge": 9958.971457059037,
+    "random_forest": 10157.474800218815,
+    "gradient_boosting": 9989.10998035484
+  },
+  "selected_ml_model": "ridge",
+  "test_mae": 10074.446612816362,
+  "baseline_test_mae": 11516.99421965318,
+  "test_rmse": 13826.229327556684,
+  "baseline_test_rmse": 16414.987512298074
+}
